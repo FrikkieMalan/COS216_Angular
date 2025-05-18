@@ -61,6 +61,14 @@ function askPort() {
         const msgJsonParsed = JSON.parse(raw);
         switch (msgJsonParsed.cmd) {
           case 'LOGIN': {
+            const payload = msgJsonParsed.payload;
+            if (!payload || typeof payload !== 'object') {
+              ws.send(JSON.stringify({
+                status: 'ERROR',
+                message: 'Missing or invalid login payload'
+              }));
+              break;
+            }
             const { username, password, studentnum } = msgJsonParsed.payload;
             const uRes = await apiClient.post('', {
               type: 'Login',

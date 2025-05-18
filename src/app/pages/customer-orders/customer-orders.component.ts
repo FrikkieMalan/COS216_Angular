@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ApiService, Order }          from '../../services/api.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { ApiService, Order }          from '../../services/api.service';
       </li>
     </ul>
   `,
-  imports: []
+  imports: [CommonModule]
 })
 export class CustomerOrdersComponent implements OnInit {
   private api = inject(ApiService);

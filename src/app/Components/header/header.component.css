@@ -1,0 +1,118 @@
+header {
+    background-color: #A5668B;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    position: relative;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-links_left,
+.nav-links_right {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links_left {
+    flex: 0 0 auto;
+}
+
+.nav-links_right {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.logo img {
+    height: 50px;
+    display: block;
+}
+
+.nav-links_right a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links_right a:hover,
+.nav-links_right a.active {
+    color: #007bff;
+}
+
+#theme-switcher {
+    display: flex;
+    gap: 5px;
+}
+
+#theme-switcher button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+#theme-switcher button.active-theme {
+    background-color: #007bff;
+    color: white;
+    border-color: #0069d9;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links_right {
+        margin-top: 15px;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .nav-links_right li {
+        margin: 5px 0;
+    }
+
+    #theme-switcher {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Dark theme styles */
+:host-context(.dark) header {
+    background-color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+:host-context(.dark) .nav-links_right a {
+    color: #f0f0f0;
+}
+
+:host-context(.dark) .nav-links_right a:hover,
+:host-context(.dark) .nav-links_right a.active {
+    color: #5d9cec;
+}
+
+:host-context(.dark) #theme-switcher button:not(.active-theme) {
+    background-color: #444;
+    color: #f0f0f0;
+    border-color: #555;
+}

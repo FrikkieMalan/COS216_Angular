@@ -1,5 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ApiService, Order }          from '../../services/api.service';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-courier-dashboard',
@@ -14,7 +16,7 @@ import { ApiService, Order }          from '../../services/api.service';
       </li>
     </ul>
   `,
-  imports: []
+  imports: [CommonModule]
 })
 export class CourierDashboardComponent implements OnInit {
   private api = inject(ApiService);

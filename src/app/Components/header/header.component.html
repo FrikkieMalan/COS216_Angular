@@ -1,0 +1,32 @@
+<header>
+    <nav>
+        <ul class="nav-links_left">
+            <li class="logo">
+                <a routerLink="/">
+                    <img src="CloudCargo_Logo_Trans.png" alt="CloudCargo Logo">
+                </a>
+            </li>
+        </ul>
+        <ul class="nav-links_right">
+            <li><a routerLink="/products" routerLinkActive="active">Products</a></li>
+            <li><a routerLink="/specials" routerLinkActive="active">Specials</a></li>
+            <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
+            <li><a routerLink="/wishlist" routerLinkActive="active">Wishlist</a></li> <ng-container
+                *ngIf="isLoggedIn; else loginLinks">
+                <li><a routerLink="/customerOrders" routerLinkActive="active">My Orders</a></li>
+                <li><a (click)="logout()" style="cursor: pointer;">Logout</a></li>
+            </ng-container>
+            <ng-template #loginLinks>
+                <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+                <li><a routerLink="/signup" routerLinkActive="active">Register</a></li>
+            </ng-template>
+
+            <li id="theme-switcher">
+                <button id="lightMode" [class.active-theme]="currentTheme === 'light'"
+                    (click)="updateTheme('light')">Light Mode</button>
+                <button id="darkMode" [class.active-theme]="currentTheme === 'dark'" (click)="updateTheme('dark')">Dark
+                    Mode</button>
+            </li>
+        </ul>
+    </nav>
+</header>

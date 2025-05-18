@@ -1,1 +1,27 @@
-<p>courier-dashboard works!</p>
+<div class="courier-dashboard">
+    <h2>Pending Deliveries</h2>
+
+    <div class="loading" *ngIf="loading">Loading deliveries...</div>
+
+    <div class="error" *ngIf="error">{{error}}</div>
+
+    <div class="deliveries-list" *ngIf="!loading && !error">
+        <div class="no-deliveries" *ngIf="deliveries.length === 0">
+            No pending deliveries at the moment.
+        </div>
+
+        <div class="delivery-card" *ngFor="let delivery of deliveries">
+            <div class="delivery-info">
+                <h3>Order #{{delivery.orderId}}</h3>
+                <p>Destination: {{delivery.destination}}</p>
+                <p>Status: {{delivery.status}}</p>
+                <p>Customer: {{delivery.customerName}}</p>
+            </div>
+            <div class="delivery-actions">
+                <button (click)="startDelivery(delivery.orderId)" class="start-delivery-btn">
+                    Start Delivery
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

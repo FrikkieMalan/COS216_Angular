@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient }        from '@angular/common/http';
-import { Observable }        from 'rxjs';
-import Cookies from 'js-cookie';
+import { Observable, throwError, of }        from 'rxjs';
 
 export interface Order {
   order_id: number;
@@ -13,24 +12,25 @@ export interface Order {
   createdAt?: string;
 }
 
+function isBrowser(): boolean {
+  return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+}
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost/api.php';
-
-  createOrder(customerId: number): Observable<{order_id:number,tracking_num:string}> {
-    return this.http.post<{order_id:number,tracking_num:string}>(this.apiUrl, {
-      type: 'CreateOrder',
-      apikey: Cookies.get('apikey'),
-      studentnum: 'u14439141',
-      customer_id: customerId
-    });
-  }
+  private apiUrl = 'https://wheatley.cs.up.ac.za/u14439141/api.php';
 
   updateOrder(orderId: number, lat: number, lng: number, state: string) {
-    return this.http.post<{updated:number}>(this.apiUrl, {
+    if (!isBrowser()) {
+      return throwError(() => new Error('Not running in browser context'));
+    }
+  
+    const apikey = localStorage.getItem('apikey');
+  
+    return this.http.post<{ updated: number }>(this.apiUrl, {
       type: 'UpdateOrder',
-      apikey: Cookies.get('apikey'),
+      apikey,
       studentnum: 'u14439141',
       order_id: orderId,
       dest_lat: lat,
@@ -40,9 +40,15 @@ export class ApiService {
   }
 
   getAllOrders(): Observable<{status:string,data:Order[]}> {
-    return this.http.post<{status:string,data:Order[]}>(this.apiUrl, {
+    if (!isBrowser()) {
+      return throwError(() => new Error('Not running in browser context'));
+    }
+  
+    const apikey = localStorage.getItem('apikey');
+  
+    return this.http.post<{ status: string, data: Order[] }>(this.apiUrl, {
       type: 'GetAllOrders',
-      apikey: Cookies.get('apikey'),
+      apikey,
       studentnum: 'u14439141'
     });
   }
